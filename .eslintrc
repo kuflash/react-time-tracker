@@ -1,0 +1,61 @@
+{
+  "root": true,
+  "env": {
+    "browser": true,
+    "jest/globals": true
+  },
+  "extends": ["airbnb"],
+  "plugins": [
+    "react",
+    "import",
+    "jest"
+  ],
+  "rules": {
+    camelcase: 0,
+    complexity: [1, 5],
+    class-methods-use-this: 0,
+    no-underscore-dangle: ["error", { "allow": ["__"] }],
+    no-confusing-arrow: 0,
+    "jsx-quotes": [2, "prefer-single"],
+    "import/no-dynamic-require": 0,
+    "import/no-extraneous-dependencies": ["error", {"devDependencies": true}],
+    "import/prefer-default-export": 0,
+    "react/jsx-handler-names": [2, {
+      "eventHandlerPrefix": "handle",
+      "eventHandlerPropPrefix": "on"
+    }],
+    "react/no-unescaped-entities": 0,
+    "react/jsx-key": 2,
+    "react/no-direct-mutation-state": 2,
+    "react/sort-comp": ['error', {
+      order: [
+        'static-methods',
+        'lifecycle',
+        '/^handle.+$/',
+        '/^(get|set)(?!(InitialState$|DefaultProps$|ChildContext$)).+$/',
+        'everything-else',
+        '/^render.+$/',
+        'render'
+      ],
+    }],
+    "react/jsx-filename-extension": [2, { "extensions": [".js"] }],
+    "react/forbid-prop-types": [2, "forbid": ["any"]],
+    "react/prefer-stateless-function": 0
+  },
+  "settings": {
+    "import/parser": "babel-eslint",
+    "import/resolver": {
+      node: {
+        moduleDirectory: [
+          'src',
+          'node_modules',
+        ]
+      }
+    }
+  },
+  "parser": "babel-eslint",
+  "ecmaFeatures": {
+    jsx: true,
+    module: true
+  },
+}

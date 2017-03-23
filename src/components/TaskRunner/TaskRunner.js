@@ -20,11 +20,7 @@ class TaskRunner extends Component {
   handleSubmit = (event) => {
     event.preventDefault();
 
-    const {
-      isRunning,
-      onStart,
-      onStop,
-    } = this.props;
+    const { isRunning, onStart, onStop } = this.props;
 
     if (isRunning) {
       onStop();
@@ -41,10 +37,7 @@ class TaskRunner extends Component {
   getTextRunnerButton = () => this.props.isRunning ? 'Stop' : 'Start';
 
   render() {
-    const {
-      taskName,
-    } = this.props;
-
+    const { taskName } = this.props;
     return (
       <form onSubmit={this.handleSubmit}>
         <input

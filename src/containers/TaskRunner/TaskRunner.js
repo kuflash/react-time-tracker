@@ -45,7 +45,7 @@ class TaskRunnerContainer extends Component {
     const { taskName } = this.state;
 
     startTask({ taskName });
-  };
+  }
 
   handleStopTask = () => {
     const { stopTask, activeTask: { id } } = this.props;
@@ -56,7 +56,7 @@ class TaskRunnerContainer extends Component {
     this.setState({
       taskName: '',
     });
-  };
+  }
 
   handleChangeName = (newName) => {
     this.setState({

@@ -1,7 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import * as actions from '../../redux/modules/tasks';
-import TaskRunner from '../../components/TaskRunner';
 
 const mapStateToProps = state => ({
   isRunning: state.tasks.activeTaskId !== null,
@@ -33,21 +32,25 @@ class TaskRunnerContainer extends Component {
   }
 
   componentWillMount() {
-    const { isRunning, activeTask } = this.props;
+    const { activeTask } = this.props;
 
     this.setState({
-      taskName: isRunning ? activeTask.taskName : '',
+      taskName: activeTask.taskName || '',
     });
   }
 
-  handleStartTask = () => {
+  handleStartTask = (event) => {
+    event.preventDefault();
+
     const { startTask } = this.props;
     const { taskName } = this.state;
 
     startTask({ taskName });
   }
 
-  handleStopTask = () => {
+  handleStopTask = (event) => {
+    event.preventDefault();
+
     const { stopTask, activeTask: { id } } = this.props;
     const { taskName } = this.state;
 
@@ -58,22 +61,25 @@ class TaskRunnerContainer extends Component {
     });
   }
 
-  handleChangeName = (newName) => {
+  handleChangeName = (event) => {
     this.setState({
-      taskName: newName,
+      taskName: event.target.value,
     });
   }
 
   render() {
     const { isRunning } = this.props;
+    const { taskName } = this.state;
+
     return (
-      <TaskRunner
-        isRunning={isRunning}
-        taskName={this.state.taskName}
-        onStart={this.handleStartTask}
-        onStop={this.handleStopTask}
-        onChangeName={this.handleChangeName}
-      />
+      <form onSubmit={isRunning ? this.handleStopTask : this.handleStartTask}>
+        <input
+          type='text'
+          value={taskName}
+          onChange={this.handleChangeName}
+        />
+        <button>{isRunning ? 'Stop' : 'Start'}</button>
+      </form>
     );
   }
 }

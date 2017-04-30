@@ -1,13 +1,12 @@
-import React, { Component, PropTypes } from 'react';
+import React, { PureComponent, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { not, equals } from 'ramda';
 import { getSortedCompletedTasks } from '../../redux/modules/tasks/selectors';
 
 const mapStateToProps = (state, props) => ({
   tasks: getSortedCompletedTasks(state, props),
 });
 
-class CompletedTasksContainer extends Component {
+class CompletedTasksContainer extends PureComponent {
   static propTypes = {
     tasks: PropTypes.array,
     sortProperty: PropTypes.string,
@@ -18,10 +17,6 @@ class CompletedTasksContainer extends Component {
     tasks: [],
     sortProperty: 'stopTime',
     sortDirection: 'asc',
-  }
-
-  shouldComponentUpdate(nextProps) {
-    return not(equals(this.props)(nextProps));
   }
 
   renderTask = task => (

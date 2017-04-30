@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
+import Timer from '../../components/Timer';
 import * as actions from '../../redux/modules/tasks';
 
 const mapStateToProps = state => ({
@@ -68,15 +69,17 @@ class TaskRunnerContainer extends Component {
   }
 
   render() {
-    const { isRunning } = this.props;
+    const { isRunning, activeTask } = this.props;
     const { taskName } = this.state;
-
     return (
       <form onSubmit={isRunning ? this.handleStopTask : this.handleStartTask}>
         <input
           type='text'
           value={taskName}
           onChange={this.handleChangeName}
+        />
+        <Timer
+          start={isRunning ? activeTask.startTime : 0}
         />
         <button>{isRunning ? 'Stop' : 'Start'}</button>
       </form>

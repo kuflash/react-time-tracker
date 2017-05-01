@@ -1,6 +1,7 @@
 import React, { PureComponent, PropTypes } from 'react';
 import { not, equals } from 'ramda';
 import { getTimerDuration } from '../../helpers/duration';
+import './Timer.css';
 
 class Timer extends PureComponent {
 
@@ -69,7 +70,7 @@ class Timer extends PureComponent {
 
   render() {
     const { diff } = this.state;
-    return <span>{ getTimerDuration(diff) }</span>;
+    return <span className='timer'>{ getTimerDuration(diff) }</span>;
   }
 }
 

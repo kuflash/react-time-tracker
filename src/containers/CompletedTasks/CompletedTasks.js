@@ -1,6 +1,7 @@
 import React, { PureComponent, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { getSortedCompletedTasks } from '../../redux/modules/tasks/selectors';
+import CompletedTask from '../../components/CompletedTask';
 
 const mapStateToProps = (state, props) => ({
   tasks: getSortedCompletedTasks(state, props),
@@ -20,9 +21,11 @@ class CompletedTasksContainer extends PureComponent {
   }
 
   renderTask = task => (
-    <tr key={task.id}>
-      <td>{task.taskName}</td>
-    </tr>
+    <CompletedTask
+      key={task.id}
+      name={task.taskName}
+      duration={task.stopTime - task.startTime}
+    />
   )
 
   render() {

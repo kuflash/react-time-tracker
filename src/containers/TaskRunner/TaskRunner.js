@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import Timer from '../../components/Timer';
 import * as actions from '../../redux/modules/tasks';
+import './TaskRunner.css';
 
 const mapStateToProps = state => ({
   isRunning: state.tasks.activeTaskId !== null,
@@ -72,16 +73,21 @@ class TaskRunnerContainer extends Component {
     const { isRunning, activeTask } = this.props;
     const { taskName } = this.state;
     return (
-      <form onSubmit={isRunning ? this.handleStopTask : this.handleStartTask}>
+      <form
+        className='task-runner'
+        onSubmit={isRunning ? this.handleStopTask : this.handleStartTask}
+      >
         <input
+          className='task-runner__name'
           type='text'
           value={taskName}
+          placeholder='Enter task name...'
           onChange={this.handleChangeName}
         />
-        <Timer
-          start={isRunning ? activeTask.startTime : 0}
-        />
-        <button>{isRunning ? 'Stop' : 'Start'}</button>
+        <div className='task-runner__timer'>
+          <Timer start={isRunning ? activeTask.startTime : 0} />
+        </div>
+        <button className='task-runner__button'>{isRunning ? 'Stop' : 'Start'}</button>
       </form>
     );
   }

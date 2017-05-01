@@ -1,0 +1,51 @@
+.task-runner {
+  position: relative;
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+}
+
+.task-runner__name {
+  position: relative;
+  display: block;
+  flex-grow: 1;
+  height: 60px;
+  font-size: 32px;
+  padding: 10px 15px;
+  box-sizing: border-box;
+  border-radius: 5px;
+  border: 1px solid #ddd;
+  min-width: 0;
+}
+
+.task-runner__name::placeholder {
+  color: #bbb;
+}
+
+.task-runner__timer {
+  position: relative;
+  display: block;
+  padding: 0 20px;
+  flex-shrink: 0;
+}
+
+.task-runner__button {
+  position: relative;
+  display: block;
+  padding: 0 30px;
+  flex-basis: 150px;
+  flex-shrink: 0;
+  font-size: 32px;
+  border-radius: 5px;
+  border: none;
+  background-color: #8bc34a;
+  color: #496726;
+  height: 60px;
+  transition: background-color 0.2s ease-in-out,
+              color 0.2s ease-in-out;
+}
+
+.task-runner__button:hover {
+  background-color: #adde73;
+  color: #688f3b;
+}

@@ -1,7 +1,6 @@
 import React, { PureComponent, PropTypes } from 'react';
-import moment from 'moment';
-import 'moment-duration-format';
 import { not, equals } from 'ramda';
+import { getTimerDuration } from '../../helpers/duration';
 
 class Timer extends PureComponent {
 
@@ -43,11 +42,6 @@ class Timer extends PureComponent {
     this.stopTimer();
   }
 
-  getDurationString = diff =>
-    moment
-      .duration(diff, 'milliseconds')
-      .format('hh:mm:ss', { trim: false });
-
   calculateDiff = () => {
     this.setState({
       diff: Date.now() - this.props.start,
@@ -75,7 +69,7 @@ class Timer extends PureComponent {
 
   render() {
     const { diff } = this.state;
-    return <span>{ this.getDurationString(diff) }</span>;
+    return <span>{ getTimerDuration(diff) }</span>;
   }
 }
 

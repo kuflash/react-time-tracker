@@ -1,0 +1,32 @@
+.completedTasks {
+  position: relative;
+  width: 100%;
+  text-align: left;
+  font-family: Arial;
+  border-collapse: collapse;
+}
+
+.completedTasks__title {
+  position: relative;
+  font-weight: normal;
+  font-size: 16px;
+  color: #b4c3ca;
+}
+
+.completedTasks__title_type_name {
+  width: 100%;
+  padding: 15px;
+
+}
+
+.completedTasks__title_type_duration {
+  min-width: 110px;
+  padding: 15px;
+  text-align: center;
+}
+
+.completedTasks__title_type_actions {
+  min-width: 120px;
+  padding: 15px;
+  visibility: hidden;
+}

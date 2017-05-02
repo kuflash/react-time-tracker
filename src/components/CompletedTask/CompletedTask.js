@@ -1,20 +1,25 @@
 import React, { PropTypes } from 'react';
 import { getHoursDuration } from '../../helpers/duration';
+import './CompletedTask.css';
 
-const CompletedTask = ({ name, duration }) => (
-  <tr>
-    <td>{name} | {getHoursDuration(duration)}</td>
+const CompletedTask = ({ taskName, startTime, stopTime }) => (
+  <tr className='completedTask'>
+    <td className='completedTask__name'>{taskName}</td>
+    <td className='completedTask__duration'>{getHoursDuration(stopTime - startTime)}</td>
+    <td className='completedTask__actions'>Actions</td>
   </tr>
 );
 
 CompletedTask.propTypes = {
-  name: PropTypes.string,
-  duration: PropTypes.number,
+  taskName: PropTypes.string,
+  startTime: PropTypes.number,
+  stopTime: PropTypes.number,
 };
 
 CompletedTask.defaultProps = {
-  name: '',
-  duration: 0,
+  taskName: '',
+  startTime: 0,
+  stopTime: 0,
 };
 
 export default CompletedTask;

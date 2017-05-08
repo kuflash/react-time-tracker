@@ -2,7 +2,7 @@
   position: relative;
   display: flex;
   flex-wrap: nowrap;
-  align-items: center;
+  align-items: baseline;
 }
 
 .task-runner__name {
@@ -10,7 +10,7 @@
   display: block;
   flex-grow: 1;
   height: 60px;
-  font-size: 32px;
+  font-size: 28px;
   padding: 10px 15px;
   box-sizing: border-box;
   border-radius: 5px;
@@ -27,6 +27,8 @@
   display: block;
   padding: 0 20px;
   flex-shrink: 0;
+  flex-basis: 150px;
+  box-sizing: border-box;
 }
 
 .task-runner__button {
@@ -35,7 +37,7 @@
   padding: 0 30px;
   flex-basis: 150px;
   flex-shrink: 0;
-  font-size: 32px;
+  font-size: 28px;
   border-radius: 5px;
   border: none;
   background-color: #8bc34a;

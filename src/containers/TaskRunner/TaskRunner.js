@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
+import cx from 'classnames';
 import Timer from '../../components/Timer';
 import * as actions from '../../redux/modules/tasks';
 import './TaskRunner.css';
@@ -72,9 +73,13 @@ class TaskRunnerContainer extends Component {
   render() {
     const { isRunning, activeTask } = this.props;
     const { taskName } = this.state;
+    const rootClasses = cx('task-runner', {
+      'task-runner_state_running': isRunning,
+    });
+
     return (
       <form
-        className='task-runner'
+        className={rootClasses}
         onSubmit={isRunning ? this.handleStopTask : this.handleStartTask}
       >
         <input

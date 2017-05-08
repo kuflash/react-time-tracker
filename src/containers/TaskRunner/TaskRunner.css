@@ -51,3 +51,13 @@
   background-color: #adde73;
   color: #688f3b;
 }
+
+.task-runner_state_running .task-runner__button {
+  background-color: #f44336;
+  color: #fff;
+}
+
+.task-runner_state_running .task-runner__button:hover {
+  background-color: #f8796f;
+  color: #fff;
+}

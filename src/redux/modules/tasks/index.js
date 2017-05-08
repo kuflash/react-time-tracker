@@ -1,30 +1,19 @@
 import { createAction, createReducer } from 'redux-act';
-import uuid from 'uuid';
 
-export const startTask = createAction(
-  'RTT/START_TASK',
-  payload => payload,
-  () => ({
-    id: uuid(),
-    startTime: Date.now(),
-  }),
-);
-export const stopTask = createAction(
-  'RTT/STOP_TASK',
-  payload => payload,
-  () => ({
-    stopTime: Date.now(),
-  }),
-);
+export const startTask = createAction('RTT/START_TASK');
+export const stopTask = createAction('RTT/STOP_TASK');
 
 const initialState = {
   items: {},
   activeTaskId: null,
 };
 
-const handleStartTask = (state, payload, meta) => {
-  const { id, startTime } = meta;
-  const { taskName } = payload;
+const handleStartTask = (state, payload) => {
+  const {
+    id,
+    taskName,
+    startTime,
+  } = payload;
 
   return {
     ...state,
@@ -40,9 +29,13 @@ const handleStartTask = (state, payload, meta) => {
   };
 };
 
-const handleStopTask = (state, payload, meta) => {
-  const { stopTime } = meta;
-  const { id, taskName } = payload;
+const handleStopTask = (state, payload) => {
+  const {
+    id,
+    taskName,
+    stopTime,
+  } = payload;
+
   const newState = { ...state };
 
   newState.items[id] = {

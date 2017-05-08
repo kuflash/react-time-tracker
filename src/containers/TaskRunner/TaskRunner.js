@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
+import uuid from 'uuid';
 import cx from 'classnames';
 import Timer from '../../components/Timer';
 import * as actions from '../../redux/modules/tasks';
@@ -11,8 +12,12 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  startTask: ({ taskName }) => dispatch(actions.startTask({ taskName })),
-  stopTask: ({ id, taskName }) => dispatch(actions.stopTask({ id, taskName })),
+  startTask: ({ id, taskName, startTime }) => (
+    dispatch(actions.startTask({ id, taskName, startTime }))
+  ),
+  stopTask: ({ id, taskName, stopTime }) => (
+    dispatch(actions.stopTask({ id, taskName, stopTime }))
+  ),
 });
 
 class TaskRunnerContainer extends Component {
@@ -48,7 +53,11 @@ class TaskRunnerContainer extends Component {
     const { startTask } = this.props;
     const { taskName } = this.state;
 
-    startTask({ taskName });
+    startTask({
+      id: uuid(),
+      taskName,
+      startTime: Date.now(),
+    });
   }
 
   handleStopTask = (event) => {
@@ -57,7 +66,11 @@ class TaskRunnerContainer extends Component {
     const { stopTask, activeTask: { id } } = this.props;
     const { taskName } = this.state;
 
-    stopTask({ id, taskName });
+    stopTask({
+      id,
+      taskName,
+      stopTime: Date.now(),
+    });
 
     this.setState({
       taskName: '',

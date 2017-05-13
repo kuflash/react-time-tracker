@@ -1,5 +1,9 @@
 import uuid from 'uuid';
-import reducer, { startTask, stopTask } from './index';
+import reducer, {
+  startTask,
+  stopTask,
+  removeTask,
+} from './index';
 
 const id = uuid();
 const taskName = 'TASK_NAME';
@@ -8,14 +12,14 @@ const stopTime = Date.now();
 
 test('start task', () => {
   const initialState = {};
-  const source = reducer(initialState, startTask({ id, taskName, startTime }));
+  const result = reducer(initialState, startTask({ id, taskName, startTime }));
   const etalon = {
     items: {
       [id]: { id, taskName, startTime },
     },
     activeTaskId: id,
   };
-  expect(source).toEqual(etalon);
+  expect(result).toEqual(etalon);
 });
 
 test('stop task', () => {
@@ -25,12 +29,23 @@ test('stop task', () => {
     },
     activeTaskId: id,
   };
-  const source = reducer(initialState, stopTask({ id, taskName, stopTime }));
+  const result = reducer(initialState, stopTask({ id, taskName, stopTime }));
   const etalon = {
     items: {
       [id]: { id, taskName, startTime, stopTime },
     },
     activeTaskId: null,
   };
-  expect(source).toEqual(etalon);
+  expect(result).toEqual(etalon);
+});
+
+test('remove task', () => {
+  const initialState = {
+    items: {
+      [id]: { id, taskName, startTime, stopTime },
+    },
+    activeTaskId: null,
+  };
+  const result = reducer(initialState, removeTask({ id }));
+  expect(result.items[id]).toBeUndefined();
 });

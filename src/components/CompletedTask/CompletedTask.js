@@ -6,7 +6,10 @@ const CompletedTask = ({ taskName, startTime, stopTime }) => (
   <tr className='completedTask'>
     <td className='completedTask__name'>{taskName}</td>
     <td className='completedTask__duration'>{getHoursDuration(stopTime - startTime)}</td>
-    <td className='completedTask__actions'>Actions</td>
+    <td className='completedTask__actions'>
+      <button className='completedTask__action completedTask__action_type_restart' title='Restart' />
+      <button className='completedTask__action completedTask__action_type_delete' title='Delete' />
+    </td>
   </tr>
 );
 

@@ -20,4 +20,98 @@
 .completedTask__actions {
   min-width: 120px;
   padding: 15px;
+  font-size: 0;
+  text-align: center;
+}
+
+.completedTask__action {
+  position: relative;
+  margin-left: 10px;
+  margin-right: 10px;
+  display: inline-block;
+  border: none;
+  width: 30px;
+  height: 30px;
+  border-radius: 4px;
+  vertical-align: middle;
+  transition: background-color 0.2s ease-in-out,
+              color 0.2s ease-in-out,
+              transform 0.2s ease-in-out;
+}
+
+.completedTask__action:disabled {
+  opacity: 0.3;
+}
+
+.completedTask__action_type_restart,
+.completedTask__action_type_restart:disabled:hover {
+  background-color: #8bc34a;
+  color: #496726;
+}
+
+.completedTask__action_type_restart:hover,
+.completedTask__action_type_restart:focus {
+  background-color: #adde73;
+  color: #688f3b;
+}
+
+.completedTask__action_type_restart:active {
+  background-color: #8bc34a;
+  color: #496726;
+  transform: scale(0.9);
+}
+
+.completedTask__action_type_restart::after {
+  position: relative;
+  display: inline-block;
+  content: '';
+  width: 0;
+  height: 0;
+  border-width: 5px;
+  border-style: solid;
+  border-top-color: currentColor;
+  border-left-color: currentColor;
+  border-right-color: transparent;
+  border-bottom-color: transparent;
+  transform: rotate(135deg);
+  left: -3px;
+}
+
+.completedTask__action_type_delete,
+.completedTask__action_type_delete:disabled:hover {
+  background-color: #f44336;
+  color: #fff;
+}
+
+.completedTask__action_type_delete:hover,
+.completedTask__action_type_delete:focus {
+  background-color: #f8796f;
+}
+.completedTask__action_type_delete:active {
+  background-color: #f44336;
+  color: #fff;
+  transform: scale(0.9);
+}
+
+.completedTask__action_type_delete::before,
+.completedTask__action_type_delete::after {
+  position: absolute;
+  display: block;
+  content: '';
+  width: 20px;
+  height: 4px;
+  background-color: currentColor;
+  border-radius: 4px;
+  top: 50%;
+  left: 50%;
+  margin-left: -10px;
+  margin-top: -2px;
+}
+
+.completedTask__action_type_delete::before {
+  transform: rotate(45deg);
+}
+
+.completedTask__action_type_delete::after {
+  transform: rotate(-45deg);
 }

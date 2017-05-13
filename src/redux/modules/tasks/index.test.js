@@ -1,53 +1,34 @@
 import uuid from 'uuid';
 import reducer, { startTask, stopTask } from './index';
 
-const ID = uuid();
-const TASK_NAME = 'TASK_NAME';
-const START_TIME = Date.now();
-const STOP_TIME = Date.now();
+const id = uuid();
+const taskName = 'TASK_NAME';
+const startTime = Date.now();
+const stopTime = Date.now();
 
-it('start task', () => {
-  const source = reducer(undefined, startTask({
-    id: ID,
-    taskName: TASK_NAME,
-    startTime: START_TIME,
-  }));
+test('start task', () => {
+  const initialState = {};
+  const source = reducer(initialState, startTask({ id, taskName, startTime }));
   const etalon = {
     items: {
-      [ID]: {
-        id: ID,
-        taskName: TASK_NAME,
-        startTime: START_TIME,
-      },
+      [id]: { id, taskName, startTime },
     },
-    activeTaskId: ID,
+    activeTaskId: id,
   };
   expect(source).toEqual(etalon);
 });
 
-it('stop task', () => {
-  const source = reducer({
+test('stop task', () => {
+  const initialState = {
     items: {
-      [ID]: {
-        id: ID,
-        taskName: TASK_NAME,
-        startTime: START_TIME,
-      },
+      [id]: { id, taskName, startTime },
     },
-    activeTaskId: ID,
-  }, stopTask({
-    id: ID,
-    taskName: TASK_NAME,
-    stopTime: STOP_TIME,
-  }));
+    activeTaskId: id,
+  };
+  const source = reducer(initialState, stopTask({ id, taskName, stopTime }));
   const etalon = {
     items: {
-      [ID]: {
-        id: ID,
-        taskName: TASK_NAME,
-        startTime: START_TIME,
-        stopTime: STOP_TIME,
-      },
+      [id]: { id, taskName, startTime, stopTime },
     },
     activeTaskId: null,
   };

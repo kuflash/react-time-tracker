@@ -1,5 +1,6 @@
 import { createAction, createReducer } from 'redux-act';
 import { omit } from 'ramda';
+
 export const startTask = createAction('RTT/START_TASK');
 export const stopTask = createAction('RTT/STOP_TASK');
 export const removeTask = createAction('RTT/REMOVE_TASK');

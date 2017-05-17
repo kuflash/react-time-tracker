@@ -47,6 +47,18 @@ class TaskRunnerContainer extends Component {
     });
   }
 
+  componentWillReceiveProps(nextProps) {
+    const { activeTask } = nextProps;
+
+    this.setState({
+      taskName: activeTask.taskName || '',
+    });
+  }
+
+  componentDidUpdate() {
+    this.taskNameInput.focus();
+  }
+
   handleStartTask = (event) => {
     event.preventDefault();
 
@@ -101,6 +113,7 @@ class TaskRunnerContainer extends Component {
           value={taskName}
           placeholder='Enter task name...'
           onChange={this.handleChangeName}
+          ref={(input) => { this.taskNameInput = input; }}
         />
         <div className='task-runner__timer'>
           <Timer start={isRunning ? activeTask.startTime : 0} />

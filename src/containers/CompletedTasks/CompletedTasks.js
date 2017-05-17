@@ -1,6 +1,7 @@
 import React, { PureComponent, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { memoize } from 'ramda';
+import uuid from 'uuid';
 import * as actions from '../../redux/modules/tasks';
 import { getSortedCompletedTasks } from '../../redux/modules/tasks/selectors';
 import CompletedTask from '../../components/CompletedTask';
@@ -12,6 +13,11 @@ const mapStateToProps = (state, props) => ({
 
 const mapDispatchToProps = dispatch => ({
   removeTask: id => () => dispatch(actions.removeTask({ id })),
+  startTask: taskName => () => dispatch(actions.startTask({
+    id: uuid(),
+    startTime: Date.now(),
+    taskName,
+  })),
 });
 
 class CompletedTasksContainer extends PureComponent {
@@ -21,6 +27,7 @@ class CompletedTasksContainer extends PureComponent {
     sortProperty: PropTypes.string,
     sortDirection: PropTypes.string,
     removeTask: PropTypes.func,
+    startTask: PropTypes.func,
   }
 
   static defaultProps = {
@@ -28,9 +35,12 @@ class CompletedTasksContainer extends PureComponent {
     sortProperty: 'stopTime',
     sortDirection: 'asc',
     removeTask: () => {},
+    startTask: () => {},
   }
 
   removeTask = memoize(id => this.props.removeTask(id));
+
+  startTask = taskName => this.props.startTask(taskName);
 
   renderTask = task => (
     <CompletedTask
@@ -39,6 +49,7 @@ class CompletedTasksContainer extends PureComponent {
       startTime={task.startTime}
       stopTime={task.stopTime}
       onRemoveTask={this.removeTask(task.id)}
+      onStartTask={this.startTask(task.taskName)}
     />
   )
 

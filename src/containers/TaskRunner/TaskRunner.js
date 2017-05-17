@@ -12,11 +12,19 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  startTask: ({ id, taskName, startTime }) => (
-    dispatch(actions.startTask({ id, taskName, startTime }))
+  startTask: ({ taskName }) => (
+    dispatch(actions.startTask({
+      id: uuid(),
+      startTime: Date.now(),
+      taskName,
+    }))
   ),
-  stopTask: ({ id, taskName, stopTime }) => (
-    dispatch(actions.stopTask({ id, taskName, stopTime }))
+  stopTask: ({ id, taskName }) => (
+    dispatch(actions.stopTask({
+      id,
+      taskName,
+      stopTime: Date.now(),
+    }))
   ),
 });
 
@@ -65,11 +73,7 @@ class TaskRunnerContainer extends Component {
     const { startTask } = this.props;
     const { taskName } = this.state;
 
-    startTask({
-      id: uuid(),
-      taskName,
-      startTime: Date.now(),
-    });
+    startTask({ taskName });
   }
 
   handleStopTask = (event) => {
@@ -78,11 +82,7 @@ class TaskRunnerContainer extends Component {
     const { stopTask, activeTask: { id } } = this.props;
     const { taskName } = this.state;
 
-    stopTask({
-      id,
-      taskName,
-      stopTime: Date.now(),
-    });
+    stopTask({ id, taskName });
 
     this.setState({
       taskName: '',

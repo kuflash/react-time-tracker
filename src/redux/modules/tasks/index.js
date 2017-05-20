@@ -31,9 +31,9 @@ const handleStartTask = (state, payload) => {
 
 const handleStopTask = (state, payload) => {
   const unsetActiveTask = prevState => set(lensActiveTaskId, '', prevState);
-  const updateTaskData = ({ id, taskName, stopTime }) => prevState => over(
+  const updateTaskData = ({ id, stopTime }) => prevState => over(
     lensTaskById(id),
-    task => ({ ...task, taskName, stopTime }),
+    task => ({ ...task, stopTime }),
     prevState,
   );
 

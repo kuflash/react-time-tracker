@@ -30,7 +30,7 @@ test('stop task', () => {
     },
     activeTaskId: id,
   };
-  const result = reducer(initialState, stopTask({ id, taskName, stopTime }));
+  const result = reducer(initialState, stopTask({ id, stopTime }));
   const etalon = {
     items: {
       [id]: { id, taskName, startTime, stopTime },

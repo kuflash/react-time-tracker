@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
+import { isEmpty, not } from 'ramda';
 import uuid from 'uuid';
 import cx from 'classnames';
 import Timer from '../../components/Timer';
@@ -7,7 +8,7 @@ import * as actions from '../../redux/modules/tasks';
 import './TaskRunner.css';
 
 const mapStateToProps = state => ({
-  isRunning: state.tasks.activeTaskId !== null,
+  isRunning: not(isEmpty(state.tasks.activeTaskId)),
   activeTask: state.tasks.items[state.tasks.activeTaskId],
 });
 

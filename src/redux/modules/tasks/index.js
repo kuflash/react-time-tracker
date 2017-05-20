@@ -7,7 +7,7 @@ export const removeTask = createAction('RTT/REMOVE_TASK');
 
 const initialState = {
   items: {},
-  activeTaskId: null,
+  activeTaskId: '',
 };
 
 const lensTasks = lensProp('items');
@@ -29,7 +29,7 @@ const handleStartTask = (state, payload) => {
 
 const handleStopTask = (state, payload) => {
   const lensTaskById = id => compose(lensTasks, lensProp(id));
-  const unsetActiveTask = prevState => set(lensActiveTaskId, null, prevState);
+  const unsetActiveTask = prevState => set(lensActiveTaskId, '', prevState);
   const updateTaskData = ({ id, taskName, stopTime }) => prevState => over(
     lensTaskById(id),
     task => ({ ...task, taskName, stopTime }),

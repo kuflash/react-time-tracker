@@ -15,7 +15,7 @@ import {
 const createDeepEqualSelector = createSelectorCreator(memoize, equals);
 
 export const getTasksItems = state => state.tasks.items;
-export const getActiveTaskId = state => state.tasks.activeTaskId || '';
+export const getActiveTaskId = state => state.tasks.activeTaskId;
 export const getSortRuleByProperty = (
   (state, { sortProperty, sortDirection }) => cond([
     [equals('asc'), () => ascend(prop(sortProperty))],

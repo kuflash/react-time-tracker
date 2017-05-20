@@ -1,6 +1,6 @@
 import React, { PureComponent, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { memoize } from 'ramda';
+import { isEmpty, memoize, not } from 'ramda';
 import uuid from 'uuid';
 import * as actions from '../../redux/modules/tasks';
 import { getSortedCompletedTasks } from '../../redux/modules/tasks/selectors';
@@ -13,11 +13,22 @@ const mapStateToProps = (state, props) => ({
 
 const mapDispatchToProps = dispatch => ({
   removeTask: id => () => dispatch(actions.removeTask({ id })),
-  startTask: taskName => () => dispatch(actions.startTask({
-    id: uuid(),
-    startTime: Date.now(),
-    taskName,
-  })),
+  startTask: taskName => () => dispatch((_dispatch, getState) => {
+    const { tasks: { activeTaskId } } = getState();
+
+    if (not(isEmpty(activeTaskId))) {
+      dispatch(actions.stopTask({
+        id: activeTaskId,
+        stopTime: Date.now(),
+      }));
+    }
+
+    dispatch(actions.startTask({
+      id: uuid(),
+      startTime: Date.now(),
+      taskName,
+    }));
+  }),
 });
 
 class CompletedTasksContainer extends PureComponent {

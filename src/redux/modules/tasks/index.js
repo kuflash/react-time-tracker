@@ -1,5 +1,5 @@
 import { createAction, createReducer } from 'redux-act';
-import { omit } from 'ramda';
+import { assoc, compose, dissoc, lensProp, over, set } from 'ramda';
 
 export const startTask = createAction('RTT/START_TASK');
 export const stopTask = createAction('RTT/STOP_TASK');
@@ -10,52 +10,46 @@ const initialState = {
   activeTaskId: null,
 };
 
-const handleStartTask = (state, payload) => {
-  const {
-    id,
-    taskName,
-    startTime,
-  } = payload;
+const lensTasks = lensProp('items');
+const lensActiveTaskId = lensProp('activeTaskId');
 
-  return {
-    ...state,
-    items: {
-      ...state.items,
-      [id]: {
-        id,
-        startTime,
-        taskName,
-      },
-    },
-    activeTaskId: id,
-  };
+const handleStartTask = (state, payload) => {
+  const setActiveTask = id => prevState => set(lensActiveTaskId, id, prevState);
+  const addNewTask = ({ id, taskName, startTime }) => prevState => over(
+    lensTasks,
+    assoc(id, { id, taskName, startTime }),
+    prevState,
+  );
+
+  return compose(
+    addNewTask(payload),
+    setActiveTask(payload.id),
+  )(state);
 };
 
 const handleStopTask = (state, payload) => {
-  const {
-    id,
-    taskName,
-    stopTime,
-  } = payload;
+  const lensTaskById = id => compose(lensTasks, lensProp(id));
+  const unsetActiveTask = prevState => set(lensActiveTaskId, null, prevState);
+  const updateTaskData = ({ id, taskName, stopTime }) => prevState => over(
+    lensTaskById(id),
+    task => ({ ...task, taskName, stopTime }),
+    prevState,
+  );
 
-  const newState = { ...state };
-
-  newState.items[id] = {
-    ...newState.items[id],
-    stopTime,
-    taskName,
-  };
-  newState.activeTaskId = null;
-
-  return newState;
+  return compose(
+    updateTaskData(payload),
+    unsetActiveTask,
+  )(state);
 };
 
 const handleRemoveTask = (state, payload) => {
-  const { id } = payload;
-  return {
-    ...state,
-    items: omit(id, state.items),
-  };
+  const removeTaskById = id => prevState => over(
+    lensTasks,
+    dissoc(id),
+    prevState,
+  );
+
+  return removeTaskById(payload.id)(state);
 };
 
 const reducer = createReducer({

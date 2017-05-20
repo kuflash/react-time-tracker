@@ -34,7 +34,7 @@ test('stop task', () => {
     items: {
       [id]: { id, taskName, startTime, stopTime },
     },
-    activeTaskId: null,
+    activeTaskId: '',
   };
   expect(result).toEqual(etalon);
 });
@@ -44,7 +44,7 @@ test('remove task', () => {
     items: {
       [id]: { id, taskName, startTime, stopTime },
     },
-    activeTaskId: null,
+    activeTaskId: '',
   };
   const result = reducer(initialState, removeTask({ id }));
   expect(result.items[id]).toBeUndefined();

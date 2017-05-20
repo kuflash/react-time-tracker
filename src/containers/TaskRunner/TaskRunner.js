@@ -27,6 +27,9 @@ const mapDispatchToProps = dispatch => ({
       stopTime: Date.now(),
     }))
   ),
+  renameTask: ({ id, taskName }) => (
+    dispatch(actions.renameTask({ id, taskName }))
+  ),
 });
 
 class TaskRunnerContainer extends Component {
@@ -35,6 +38,7 @@ class TaskRunnerContainer extends Component {
     activeTask: PropTypes.object,
     startTask: PropTypes.func,
     stopTask: PropTypes.func,
+    renameTask: PropTypes.func,
   }
 
   static defaultProps = {
@@ -42,6 +46,7 @@ class TaskRunnerContainer extends Component {
     activeTask: {},
     startTask: () => {},
     stopTask: () => {},
+    renameTask: () => {},
   }
 
   state = {
@@ -91,9 +96,11 @@ class TaskRunnerContainer extends Component {
   }
 
   handleChangeName = (event) => {
-    this.setState({
-      taskName: event.target.value,
-    });
+    const { renameTask, isRunning, activeTask: { id } } = this.props;
+    const taskName = event.target.value;
+
+    if (isRunning) renameTask({ id, taskName });
+    else this.setState({ taskName });
   }
 
   render() {

@@ -5,6 +5,7 @@ import { isEmpty, memoize, not } from 'ramda';
 import uuid from 'uuid';
 import * as actions from '../../redux/modules/tasks';
 import { getSortedCompletedTasks } from '../../redux/modules/tasks/selectors';
+import { getHoursDuration } from '../../helpers/duration';
 import CompletedTask from '../../components/CompletedTask';
 import './CompletedTasks.css';
 
@@ -58,8 +59,7 @@ class CompletedTasksContainer extends PureComponent {
     <CompletedTask
       key={task.id}
       taskName={task.taskName}
-      startTime={task.startTime}
-      stopTime={task.stopTime}
+      duration={getHoursDuration(task.stopTime - task.startTime)}
       onRemoveTask={this.removeTask(task.id)}
       onStartTask={this.startTask(task.taskName)}
     />

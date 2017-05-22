@@ -1,12 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { getHoursDuration } from '../../helpers/duration';
 import './CompletedTask.css';
 
-const CompletedTask = ({ taskName, startTime, stopTime, onRemoveTask, onStartTask }) => (
+const CompletedTask = ({ taskName, duration, onRemoveTask, onStartTask }) => (
   <tr className='completedTask'>
     <td className='completedTask__name'>{taskName}</td>
-    <td className='completedTask__duration'>{getHoursDuration(stopTime - startTime)}</td>
+    <td className='completedTask__duration'>{duration}</td>
     <td className='completedTask__actions'>
       <button
         className='completedTask__action completedTask__action_type_restart'
@@ -24,16 +23,14 @@ const CompletedTask = ({ taskName, startTime, stopTime, onRemoveTask, onStartTas
 
 CompletedTask.propTypes = {
   taskName: PropTypes.string,
-  startTime: PropTypes.number,
-  stopTime: PropTypes.number,
+  duration: PropTypes.string,
   onRemoveTask: PropTypes.func,
   onStartTask: PropTypes.func,
 };
 
 CompletedTask.defaultProps = {
   taskName: '',
-  startTime: 0,
-  stopTime: 0,
+  duration: '',
   onRemoveTask: () => {},
   onStartTask: () => {},
 };

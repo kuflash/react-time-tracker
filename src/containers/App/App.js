@@ -1,9 +1,9 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import TaskRunner from '../TaskRunner';
 import CompletedTasks from '../CompletedTasks';
 import './App.css';
 
-class App extends Component {
+class App extends PureComponent {
   render() {
     return (
       <main className='app'>

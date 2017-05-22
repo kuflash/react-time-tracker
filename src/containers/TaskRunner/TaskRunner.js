@@ -1,4 +1,4 @@
-import React, { Component, PropTypes } from 'react';
+import React, { PureComponent, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { isEmpty, not } from 'ramda';
 import uuid from 'uuid';
@@ -32,7 +32,7 @@ const mapDispatchToProps = dispatch => ({
   ),
 });
 
-class TaskRunnerContainer extends Component {
+class TaskRunnerContainer extends PureComponent {
   static propTypes = {
     isRunning: PropTypes.bool,
     activeTask: PropTypes.object,
@@ -95,6 +95,12 @@ class TaskRunnerContainer extends Component {
     });
   }
 
+  handleSubmit = (event) => {
+    const { isRunning } = this.props;
+    if (isRunning) this.handleStopTask(event);
+    else this.handleStartTask(event);
+  }
+
   handleChangeName = (event) => {
     const { renameTask, isRunning, activeTask: { id } } = this.props;
     const taskName = event.target.value;
@@ -102,6 +108,10 @@ class TaskRunnerContainer extends Component {
     if (isRunning) renameTask({ id, taskName });
     else this.setState({ taskName });
   }
+
+  setTaskNameInput = (input) => { this.taskNameInput = input; }
+
+  getButtonText = () => this.props.isRunning ? 'Stop' : 'Start';
 
   render() {
     const { isRunning, activeTask } = this.props;
@@ -113,7 +123,7 @@ class TaskRunnerContainer extends Component {
     return (
       <form
         className={rootClasses}
-        onSubmit={isRunning ? this.handleStopTask : this.handleStartTask}
+        onSubmit={this.handleSubmit}
       >
         <input
           className='task-runner__name'
@@ -121,12 +131,12 @@ class TaskRunnerContainer extends Component {
           value={taskName}
           placeholder='Enter task name...'
           onChange={this.handleChangeName}
-          ref={(input) => { this.taskNameInput = input; }}
+          ref={this.setTaskNameInput}
         />
         <div className='task-runner__timer'>
-          <Timer start={isRunning ? activeTask.startTime : 0} />
+          <Timer start={activeTask.startTime} />
         </div>
-        <button className='task-runner__button'>{isRunning ? 'Stop' : 'Start'}</button>
+        <button className='task-runner__button'>{this.getButtonText()}</button>
       </form>
     );
   }

@@ -13,25 +13,11 @@ const mapStateToProps = state => ({
   activeTask: state.tasks.items[state.tasks.activeTaskId],
 });
 
-const mapDispatchToProps = dispatch => ({
-  startTask: ({ taskName }) => (
-    dispatch(actions.startTask({
-      id: uuid(),
-      startTime: Date.now(),
-      taskName,
-    }))
-  ),
-  stopTask: ({ id, taskName }) => (
-    dispatch(actions.stopTask({
-      id,
-      taskName,
-      stopTime: Date.now(),
-    }))
-  ),
-  renameTask: ({ id, taskName }) => (
-    dispatch(actions.renameTask({ id, taskName }))
-  ),
-});
+const mapDispatchToProps = {
+  startTask: actions.startTask,
+  stopTask: actions.stopTask,
+  renameTask: actions.renameTask,
+};
 
 class TaskRunnerContainer extends PureComponent {
   static propTypes = {
@@ -79,8 +65,10 @@ class TaskRunnerContainer extends PureComponent {
 
     const { startTask } = this.props;
     const { taskName } = this.state;
+    const id = uuid();
+    const startTime = Date.now();
 
-    startTask({ taskName });
+    startTask({ id, taskName, startTime });
   }
 
   handleStopTask = (event) => {
@@ -88,8 +76,9 @@ class TaskRunnerContainer extends PureComponent {
 
     const { stopTask, activeTask: { id } } = this.props;
     const { taskName } = this.state;
+    const stopTime = Date.now();
 
-    stopTask({ id, taskName });
+    stopTask({ id, taskName, stopTime });
 
     this.setState({
       taskName: '',
